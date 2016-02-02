@@ -1,23 +1,45 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [A,B_dist,B_cont,C,K_R,K_L,M_R,M_L] = createStrcuture(SegNum,beam_length,Locs,ControlLocs,DisturbLocs,SensorLocs,I,A,E,rho,etaE,c_w,I_h)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% createLengthArray: Create Length Array for GFEM			
+% createStrcuture: Create GFEM space structure with rigid section			
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% This function is called to create an section length array for the
-% Galerkin Finite Element Method with specified actuation locations for a
-% given beam length and number of segements
+% This function creates the the state, input, and output matrices of an space
+% structure with a rigid center component. The mass and stiffness matrices
+% are also returned for both the right and the left side of the space
+% structure
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	Author:	Nick Cramer, UCSC, Department of Computer Engineering			
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Called by:	CreateK_M_C											
+% Called by:    --------------------										
 % Calls:	MATLAB 5.2 std fcns
+%           CreateK_M_C
+%           createLengthArray
 % Inputs:   beam_length - Length of beam
-%           ActLocs -   Array of actuator locations starting from closest to
+%           Locs -   Array of actuator and sensor locations starting from closest to
 %                       origin and increasing as array indices increase (m)
 %           SegNum -    Required number of segments for the half beam
+%           ControlLocs - Array of control input locations
+%           DisturbLocs - Array of disturbance input locations
+%           SensorLocs - Array of sensor locations
+%           I - Area moment of inertia of flexible beam
+%           A - Cross section area of flexible beam
+%           E - Modulus of elasticity
+%           rho - Density of beams
+%           etaE - Damping coefficeint of beams
+%           c_w - Center rigid component width
+%           I_h - Moment of inertia for center
 % Outputs:  A - State matrix of size 2*(4*SegNum+1)
-%           B_dist - Disturbance input matrix of size 2*(4*SegNum+1) by 
+%           B_dist - Disturbance input matrix of size 2*(4*SegNum+1) by
+%                   length(DisturbLocs)
+%           B_cont - Control input matrix of size 2*(4*SegNum+1) by
+%                   length(ControlLocs)
+%           C - Output matrix
+%           K_R - Right stiffness matrix
+%           K_L - Left stiffness matrix
+%           M_R - Right mass matrix
+%           M_L - Left mass matrix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Notes: Currently assumes symetric structure
 
 %Intialize Matrices
 AsubK = zeros(4*SegNum+1);
@@ -58,7 +80,7 @@ AsubK_R = -M_R\K_R;
 AsubK_R = AsubK_R(3:end,3:end);
 AsubK(1:2*SegNum,1:2*SegNum) = AsubK_L;
 AsubK(end-2*SegNum+1:end,end-2*SegNum+1:end) = AsubK_R;
-AsubK(2*SegNum+1,2*SegNum-1:2*SegNum) = c_w/(2*I_h)*K_L(2*SegNum+1,2*SegNum-1:2*SegNum)-K_L(2*SegNum+2,2*SegNum-1:2*SegNum);
+AsubK(2*SegNum+1,2*SegNum-1:2*SegNum) = -c_w/(2*I_h)*K_L(2*SegNum+1,2*SegNum-1:2*SegNum)-K_L(2*SegNum+2,2*SegNum-1:2*SegNum);
 AsubK(2*SegNum+1,2*SegNum+2:2*SegNum+3) = c_w/(2*I_h)*K_R(1,3:4)+K_R(2,3:4);
 
 %Enforce boundary conditions and add rigid body mechanics to the damping
@@ -69,7 +91,7 @@ AsubC_R = -M_R\C_R;
 AsubC_R = AsubC_R(3:end,3:end);
 AsubC(1:2*SegNum,1:2*SegNum) = AsubC_L;
 AsubC(end-2*SegNum+1:end,end-2*SegNum+1:end) = AsubC_R;
-AsubC(2*SegNum+1,2*SegNum-1:2*SegNum) = c_w/(2*I_h)*C_L(2*SegNum+1,2*SegNum-1:2*SegNum)-C_L(2*SegNum+2,2*SegNum-1:2*SegNum);
+AsubC(2*SegNum+1,2*SegNum-1:2*SegNum) = -c_w/(2*I_h)*C_L(2*SegNum+1,2*SegNum-1:2*SegNum)-C_L(2*SegNum+2,2*SegNum-1:2*SegNum);
 AsubC(2*SegNum+1,2*SegNum+2:2*SegNum+3) = c_w/(2*I_h)*C_R(1,3:4)+C_R(2,3:4);
 
 %Create A matrix by combinging sub matrices
@@ -85,7 +107,7 @@ for i = 1:length(DisturbLocs)
 end
 for i = 1:length(ControlLocs)
     segment = find(flipud(cumsum(flipud(L)))==ControlLocs(i));
-    controlInput(2*segment+1,i) = 1;
+    controlInput(2*segment-3,i) = 1;
     controlInput(2*segment-1,i) = -1;
 end
 

@@ -68,27 +68,27 @@ for i = 1:length(T)
         %Check to see the amount of time steps that have passed then
         %perform single step simulation
         if i == 1
-            xL(:,:,i+1) = DTTMMHou2015_1_30(dt,E,etaE,I,rho,CA,L,xL(1:2,2:end,1),dxL(:,2:end,1),ddxL(:,2:end,1),xL(1:2,2:end,1),ddxL(:,2:end,1),xL(1:2,2:end,1),i,fn_L);
-            xR(:,:,i+1) = DTTMMHou2015_1_30(dt,E,etaE,I,rho,CA,L,xR(1:2,2:end,1),dxR(:,2:end,1),ddxR(:,2:end,1),xR(1:2,2:end,1),ddxR(:,2:end,1),xL(1:2,2:end,1),i,fn_R);
+            xL(:,:,i+1) = DTTMMHou2016_1_30(dt,E,etaE,I,rho,CA,L,xL(1:2,2:end,1),dxL(:,2:end,1),ddxL(:,2:end,1),xL(1:2,2:end,1),ddxL(:,2:end,1),xL(1:2,2:end,1),i,fn_L);
+            xR(:,:,i+1) = DTTMMHou2016_1_30(dt,E,etaE,I,rho,CA,L,xR(1:2,2:end,1),dxR(:,2:end,1),ddxR(:,2:end,1),xR(1:2,2:end,1),ddxR(:,2:end,1),xL(1:2,2:end,1),i,fn_R);
         elseif i == 2
-            xL(:,:,i+1) = DTTMMHou2015_1_30(dt,E,etaE,I,rho,CA,L,xL(1:2,2:end,i),dxL(:,2:end,i),ddxL(:,2:end,i),xL(1:2,2:end,i-1),ddxL(:,2:end,i-1),xL(1:2,2:end,i-1),i,fn_L);
-            xR(:,:,i+1) = DTTMMHou2015_1_30(dt,E,etaE,I,rho,CA,L,xR(1:2,2:end,i),dxR(:,2:end,i),ddxR(:,2:end,i),xL(1:2,2:end,i-1),ddxR(:,2:end,i-1),xR(1:2,2:end,i-1),i,fn_R);
+            xL(:,:,i+1) = DTTMMHou2016_1_30(dt,E,etaE,I,rho,CA,L,xL(1:2,2:end,i),dxL(:,2:end,i),ddxL(:,2:end,i),xL(1:2,2:end,i-1),ddxL(:,2:end,i-1),xL(1:2,2:end,i-1),i,fn_L);
+            xR(:,:,i+1) = DTTMMHou2016_1_30(dt,E,etaE,I,rho,CA,L,xR(1:2,2:end,i),dxR(:,2:end,i),ddxR(:,2:end,i),xL(1:2,2:end,i-1),ddxR(:,2:end,i-1),xR(1:2,2:end,i-1),i,fn_R);
         else
-            xL(:,:,i+1) = DTTMMHou2015_1_30(dt,E,etaE,I,rho,CA,L,xL(1:2,2:end,i),dxL(:,2:end,i),ddxL(:,2:end,i),xL(1:2,2:end,i-1),ddxL(:,2:end,i-1),xL(1:2,2:end,i-2),i,fn_L);
-            xR(:,:,i+1) = DTTMMHou2015_1_30(dt,E,etaE,I,rho,CA,L,xR(1:2,2:end,i),dxR(:,2:end,i),ddxR(:,2:end,i),xR(1:2,2:end,i-1),ddxR(:,2:end,i-1),xR(1:2,2:end,i-2),i,fn_R);
+            xL(:,:,i+1) = DTTMMHou2016_1_30(dt,E,etaE,I,rho,CA,L,xL(1:2,2:end,i),dxL(:,2:end,i),ddxL(:,2:end,i),xL(1:2,2:end,i-1),ddxL(:,2:end,i-1),xL(1:2,2:end,i-2),i,fn_L);
+            xR(:,:,i+1) = DTTMMHou2016_1_30(dt,E,etaE,I,rho,CA,L,xR(1:2,2:end,i),dxR(:,2:end,i),ddxR(:,2:end,i),xR(1:2,2:end,i-1),ddxR(:,2:end,i-1),xR(1:2,2:end,i-2),i,fn_R);
         end
     else
         %Check to see the amount of time steps that have passed then
         %perform the simulation
         if i == 1
-            xL(:,:,i+1) = DTTMMHou2015_1_30(dt,E,etaE,I,rho,CA,L,xL(1:2,2:end,1),dxL(:,2:end,1),ddxL(:,2:end,1),xL(1:2,2:end,1),ddxL(:,2:end,1),xL(1:2,2:end,1),i,zeros(2,20));
-            xR(:,:,i+1) = DTTMMHou2015_1_30(dt,E,etaE,I,rho,CA,L,xR(1:2,2:end,1),dxR(:,2:end,1),ddxR(:,2:end,1),xR(1:2,2:end,1),ddxR(:,2:end,1),xR(1:2,2:end,1),i,zeros(2,20));
+            xL(:,:,i+1) = DTTMMHou2016_1_30(dt,E,etaE,I,rho,CA,L,xL(1:2,2:end,1),dxL(:,2:end,1),ddxL(:,2:end,1),xL(1:2,2:end,1),ddxL(:,2:end,1),xL(1:2,2:end,1),i,zeros(2,20));
+            xR(:,:,i+1) = DTTMMHou2016_1_30(dt,E,etaE,I,rho,CA,L,xR(1:2,2:end,1),dxR(:,2:end,1),ddxR(:,2:end,1),xR(1:2,2:end,1),ddxR(:,2:end,1),xR(1:2,2:end,1),i,zeros(2,20));
         elseif i == 2
-            xL(:,:,i+1) = DTTMMHou2015_1_30(dt,E,etaE,I,rho,CA,L,xL(1:2,2:end,i),dxL(:,2:end,i),ddxL(:,2:end,i),xL(1:2,2:end,i-1),ddxL(:,2:end,i-1),xL(1:2,2:end,i-1),i,zeros(2,20));
-            xR(:,:,i+1) = DTTMMHou2015_1_30(dt,E,etaE,I,rho,CA,L,xR(1:2,2:end,i),dxR(:,2:end,i),ddxR(:,2:end,i),xR(1:2,2:end,i-1),ddxR(:,2:end,i-1),xR(1:2,2:end,i-1),i,zeros(2,20));
+            xL(:,:,i+1) = DTTMMHou2016_1_30(dt,E,etaE,I,rho,CA,L,xL(1:2,2:end,i),dxL(:,2:end,i),ddxL(:,2:end,i),xL(1:2,2:end,i-1),ddxL(:,2:end,i-1),xL(1:2,2:end,i-1),i,zeros(2,20));
+            xR(:,:,i+1) = DTTMMHou2016_1_30(dt,E,etaE,I,rho,CA,L,xR(1:2,2:end,i),dxR(:,2:end,i),ddxR(:,2:end,i),xR(1:2,2:end,i-1),ddxR(:,2:end,i-1),xR(1:2,2:end,i-1),i,zeros(2,20));
         else
-            xL(:,:,i+1) = DTTMMHou2015_1_30(dt,E,etaE,I,rho,CA,L,xL(1:2,2:end,i),dxL(:,2:end,i),ddxL(:,2:end,i),xL(1:2,2:end,i-1),ddxL(:,2:end,i-1),xL(1:2,2:end,i-2),i,zeros(2,20));
-            xR(:,:,i+1) = DTTMMHou2015_1_30(dt,E,etaE,I,rho,CA,L,xR(1:2,2:end,i),dxR(:,2:end,i),ddxR(:,2:end,i),xR(1:2,2:end,i-1),ddxR(:,2:end,i-1),xR(1:2,2:end,i-2),i,zeros(2,20));
+            xL(:,:,i+1) = DTTMMHou2016_1_30(dt,E,etaE,I,rho,CA,L,xL(1:2,2:end,i),dxL(:,2:end,i),ddxL(:,2:end,i),xL(1:2,2:end,i-1),ddxL(:,2:end,i-1),xL(1:2,2:end,i-2),i,zeros(2,20));
+            xR(:,:,i+1) = DTTMMHou2016_1_30(dt,E,etaE,I,rho,CA,L,xR(1:2,2:end,i),dxR(:,2:end,i),ddxR(:,2:end,i),xR(1:2,2:end,i-1),ddxR(:,2:end,i-1),xR(1:2,2:end,i-2),i,zeros(2,20));
         end
     end
     %Check to see the iteration number for the integration step

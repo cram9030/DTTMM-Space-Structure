@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function x = DTTMMHou2015_1_30(dt,E,etaE,I,rho,CA,L,x_0,dx_0,ddx,x2,ddx2,x3,iter,fn)
+function x = DTTMMHou2016_1_30(dt,E,etaE,I,rho,CA,L,x_0,dx_0,ddx,x2,ddx2,x3,iter,fn)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % DTTMMHou2015_1_30: Single Discrete Time Transfer Method solving time step	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
